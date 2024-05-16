@@ -7,6 +7,13 @@ import { createApi } from "unsplash-js";
 import Masonry from '@mui/lab/Masonry';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useBookStore } from './store/bookStore';
+import Login from './components/Login';
+
+import appFirebase from './firebase';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+
+const auth = getAuth(appFirebase);
 
 const api = createApi({
   // Don't forget to set your access token here!
@@ -16,6 +23,19 @@ const api = createApi({
 });
 
 function App() {
+// logica de login 
+const [usuario,setUsuario] =useState(null);
+
+onAuthStateChanged(auth,(usuarioFirebase)=>{
+  if(usuarioFirebase){
+
+setUsuario(usuarioFirebase);
+  }
+  else {
+    setUsuario(null);
+  }
+})
+
   const [hasMore, setHasMore] = useState(true)
   const [data, setData] = useState([])
   let index= useRef(1);
@@ -63,27 +83,31 @@ setHasMore(true);
   
   
   return (
-   <div className='container'>
-    <Header/>
-    <InfiniteScroll
-    dataLength={data.length}
-    next={moreData}
+
+    <div className='container'>
+    { usuario ? (
+      <>
+        <Header correoUsuario={usuario.email} />
+        <InfiniteScroll
+          dataLength={data.length}
+          next={moreData}
+          hasMore={hasMore}
+          loader={<h4>Loading...</h4>}
+          style={{overflow: 'none'}}
+        >
+          <Masonry 
+            columns={{xs:2,sm:3,md:5}}
+            spacing={{xs:1,sm:2,md:3}} 
+            className='masonry'> 
+            {data.map(item=>(
+              <Card key={item.id} item={item}/>
+            ))}
+          </Masonry>
+        </InfiniteScroll>
+      </>
+    ) : <Login /> }
+  </div>
   
-    hasMore={hasMore}
-    loader={<h4>Loading...</h4>}
-    style={{overflow: 'none'}}
-    
-  >
-    <Masonry 
-    columns={{xs:2,sm:3,md:5}}
-    spacing={{xs:1,sm:2,md:3}} 
-    className='masonry'> 
-    {data.map(item=>(
-      <Card key={item.id} item={item}/>
-    ))}
-     </Masonry>
-     </InfiniteScroll>
-   </div>
   )
 }
 

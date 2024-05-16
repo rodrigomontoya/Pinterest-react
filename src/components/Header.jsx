@@ -1,7 +1,12 @@
 import Logo from "./icons/Logo";
 import { useState } from "react";
 import { useBookStore } from "../store/bookStore";
-const Header = ()=>{
+import { getAuth,signOut } from "firebase/auth";
+import appFirebase from "../firebase";
+
+const auth =getAuth(appFirebase);
+
+const Header = ({correoUsuario})=>{
 
     const [value,setValue]=useState('cat');
 
@@ -25,7 +30,7 @@ return(
         <li className="logo"><a href=""><Logo/> </a></li>
         <li><a href="">Inicio </a></li>
         <li><a href="">Hoy </a></li>
-        <li><a href="">Crear </a></li>
+        <li><a href="">{correoUsuario}</a></li>
         <li><input 
          type="search"
          placeholder="Search"
@@ -33,7 +38,10 @@ return(
          onKeyDown={handleKey}
          />
          </li>
-        <li><a href="">User </a></li>
+         <li>
+    <a onClick={() => signOut(auth)} className="logout">Logout</a>
+</li>
+
     </ul>
 </header>
 

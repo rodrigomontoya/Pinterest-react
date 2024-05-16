@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "pinterest-coc"
-  }
+    "default": "pinterest-coc",
+    "pinterest": "pinterest-coc"
+  },
+  "targets": {},
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

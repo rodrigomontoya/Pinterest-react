@@ -1,25 +1,19 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth"; // Importa el módulo de autenticación
-import {getFirestore}from "@firebase/firestore"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
+import { initializeApp } from "firebase/app";
+
+
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyC7hZ42yfc8bCCaz_hFY0hZevhoXEHgqyg",
-  authDomain: "login-pinterest.firebaseapp.com",
-  projectId: "login-pinterest",
-  storageBucket: "login-pinterest.appspot.com",
-  messagingSenderId: "21258635152",
-  appId: "1:21258635152:web:d0fca6da36b74554621515"
+  apiKey: "AIzaSyBOT2OsyMLoVne_q05aRNfjg35JOhgMdx8",
+  authDomain: "pinterest-coc.firebaseapp.com",
+  projectId: "pinterest-coc",
+  storageBucket: "pinterest-coc.appspot.com",
+  messagingSenderId: "274505803390",
+  appId: "1:274505803390:web:1aea964f285f1ff0b19a2f"
 };
 
+// Initialize Firebase
+const appFirebase = initializeApp(firebaseConfig);
 
-// Inicializa Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Obtiene una instancia del módulo de autenticación
-const db = getFirestore (app);
-
-export { auth }; // Exporta la instancia de autenticación para usarla en otros archivos
-export {db};
+export default appFirebase;
